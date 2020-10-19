@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
+import { SCREEN } from './game/config';
+import { Food } from './game/Food';
+import { Snake } from './game/Snake';
+import { SnakeGame } from './game/SnakeGame';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const container = useRef();
+  useEffect(() => {
+    const snakeGame = new SnakeGame(container.current);
+    const food = new Food();
+    const snake = new Snake(food);
+
+    snakeGame.addObject(snake);
+    snakeGame.addObject(food);
+
+    snakeGame.start(SCREEN.interval);
+    snake.move();
+  }, []);
+
+  return <div id="game-container" ref={container}></div>;
 }
 
 export default App;
