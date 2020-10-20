@@ -7,7 +7,7 @@ export class Snake {
   curDir = DIR.LR;
   step = SNAKE.step;
   speed = SNAKE.speed;
-  isDeath = false;
+  _isDeath = false;
   tails = [];
 
   constructor(food, head) {
@@ -17,9 +17,30 @@ export class Snake {
     this.food = food;
   }
 
+  set isDeath(v) {
+    this._isDeath = v;
+    if (v) {
+      this.gameFrame.stop();
+    } else {
+      this.gameFrame.start();
+    }
+
+    if (typeof this.onDeath == 'function') {
+      this.onDeath(v);
+    }
+  }
+
+  get isDeath() {
+    return this._isDeath;
+  }
+
   handleEat(h) {
     this.tails.push(this.head);
     this.head = h;
+
+    if (typeof this.onScoreChange == 'function') {
+    this.onScoreChange(this.tails.length);
+    }
   }
 
   update(ctx) {

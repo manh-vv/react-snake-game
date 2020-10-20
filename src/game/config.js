@@ -3,7 +3,11 @@ export const SIZE = 20;
 export const SCREEN = {
   w: 600,
   h: 400,
-  interval: 400,
+  
+  /**
+   * 20ms 1 update mean 1000 / 20 = 50 frame per second
+   */
+  interval: 20,
 };
 
 export const DIR = {
@@ -14,6 +18,6 @@ export const DIR = {
 };
 
 export const SNAKE = {
-  speed: 200,
+  speed: 300,
   step: SIZE,
 }

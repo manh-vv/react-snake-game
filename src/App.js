@@ -1,25 +1,54 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-import { SCREEN } from './game/config';
 import { Food } from './game/Food';
 import { Snake } from './game/Snake';
-import { SnakeGame } from './game/SnakeGame';
+import { GameFrame } from './game/GameFrame';
 
 function App() {
   const container = useRef();
+  const [score, setScore] = useState(0);
+  const [isDeath, setIsDeath] = useState(false);
+  const [snake] = useState(new Snake());
+  
   useEffect(() => {
-    const snakeGame = new SnakeGame(container.current);
-    const food = new Food();
-    const snake = new Snake(food);
+    const gameFrame = new GameFrame(container.current);
+    // snake need to know where is food placed
+    snake.food = new Food();
 
-    snakeGame.addObject(snake);
-    snakeGame.addObject(food);
+    snake.onScoreChange = (s) => setScore(s);
+    snake.onDeath = (v) => setIsDeath(v);
 
-    snakeGame.start(SCREEN.interval);
+    gameFrame.addObject(snake);
+    gameFrame.addObject(snake.food);
+
+    gameFrame.start();
     snake.move();
   }, []);
 
-  return <div id="game-container" ref={container}></div>;
+  const handleReset = () => {
+    snake.tails = [];
+    setScore(0);
+  };
+
+  return (
+    <>
+      <div id="game-container" ref={container}></div>
+
+      <div>
+        <span>Score:</span> <span>{score}</span>
+      </div>
+
+      <div>
+        <span>Is death:</span> <span>{isDeath ? 'TRUE' : 'FALSE'}</span>
+      </div>
+
+      <div>
+        <button onClick={handleReset}>
+          Reset
+        </button>
+      </div>
+    </>
+  );
 }
 
 export default App;

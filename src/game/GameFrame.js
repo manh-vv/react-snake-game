@@ -1,10 +1,17 @@
 import { SIZE, SCREEN } from './config';
 
-export class SnakeGame {
+export class GameFrame {
   gridSize = SIZE;
   interval = SCREEN.interval;
 
   objects = [];
+
+  /**
+   * 0 stop
+   * 1 playing
+   * 2 pause
+   */
+  state = 0;
 
   constructor(containerEl) {
     this.container = containerEl;
@@ -23,7 +30,7 @@ export class SnakeGame {
     canvas.height = SCREEN.h = parseInt(paintStyle.getPropertyValue('height'));
     canvas.tabIndex = 1;
     canvas.autofocus = true;
-    canvas.onkeydown = e => this.onKeyDown(e);
+    canvas.onkeydown = (e) => this.onKeyDown(e);
 
     canvas.setAttribute('style', 'border: 1px dotted gray;');
 
@@ -56,9 +63,14 @@ export class SnakeGame {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  start(interval = 300) {
+  start(interval = SCREEN.interval) {
+    this.state = 1;
     this.interval = interval;
     this.update();
+  }
+
+  stop() {
+    this.state = 0;
   }
 
   onKeyDown(e) {
@@ -86,10 +98,13 @@ export class SnakeGame {
 
     const t = this.interval - dt;
     // console.info(`Game will be updated in ${t}ms.`);
-    setTimeout(() => this.update(), t);
+    if (this.state == 1) {
+      setTimeout(() => this.update(), t);
+    }
   }
 
   addObject(obj) {
+    obj.gameFrame = this;
     this.objects.push(obj);
   }
 }
