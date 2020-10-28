@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - 'node'
+
+cache: npm
+
+script:
+  - export PUBLIC_URL=/react-snake-game/
+  - npm run build
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: build
+  on:
+    branch: master
