@@ -1,4 +1,4 @@
-import { SIZE, SCREEN } from './config';
+import { SCREEN, SIZE } from './config';
 
 export class GameFrame {
   gridSize = SIZE;
@@ -98,7 +98,7 @@ export class GameFrame {
 
     const t = this.interval - dt;
     // console.info(`Game will be updated in ${t}ms.`);
-    if (this.state == 1) {
+    if (this.state === 1) {
       setTimeout(() => this.update(), t);
     }
   }

@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
+
+import React, { useEffect, useRef, useState } from 'react';
+
 import { Food } from './game/Food';
-import { Snake } from './game/Snake';
 import { GameFrame } from './game/GameFrame';
+import { Snake } from './game/Snake';
 
 function App() {
   const container = useRef();
@@ -23,7 +25,7 @@ function App() {
 
     gameFrame.start();
     snake.move();
-  }, []);
+  }, [snake]);
 
   const handleReset = () => {
     snake.tails = [];

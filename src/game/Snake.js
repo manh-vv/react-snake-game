@@ -1,4 +1,4 @@
-import { SCREEN, SIZE, DIR, SNAKE } from './config';
+import { DIR, SCREEN, SIZE, SNAKE } from './config';
 import { randomLoc } from './utils';
 
 export class Snake {
@@ -66,7 +66,7 @@ export class Snake {
       return;
     }
 
-    if (tP.x == this.food.loc.x && tP.y == this.food.loc.y) {
+    if (tP.x === this.food.loc.x && tP.y === this.food.loc.y) {
       this.handleEat(this.food.loc.clone());
       this.food.eated();
     } else {
