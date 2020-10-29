@@ -1,0 +1,1 @@
+{"version":3,"sources":["App.css"],"names":[],"mappings":"AAAA,gBACE,WAAY,CACZ,YACF","file":"main.88a76987.chunk.css","sourcesContent":["#game-container {\n  width: 600px;\n  height: 400px;\n}\n"]}
